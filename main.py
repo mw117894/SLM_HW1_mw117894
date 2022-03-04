@@ -28,7 +28,9 @@ for size in sizes:
     r_squared_q95.append(np.quantile(result,0.95))
     r_squared_q5.append(np.quantile(result,0.05))
 
-print("Excecution time: "+str(time.time()-start_time))
+exec_time = time.time()-start_time
+
+print("Excecution time: "+str(exec_time))
 plt.scatter(sizes, r_squared_mean)
 plt.plot(sizes,r_squared_q5)
 plt.plot(sizes,r_squared_q95)
