@@ -1,8 +1,9 @@
-import numpy as np
-import pandas as pd
 from io import StringIO
-from matplotlib import pyplot as plt, rcParams
+
 import matplotlib.ticker as mticker
+import pandas as pd
+from matplotlib import pyplot as plt
+
 data = StringIO("""
 problem,language,time,size
 n-body,c,2.13,1633
@@ -48,25 +49,25 @@ regex-redux,julia,1.74,759
 """)
 
 df = pd.read_csv(data)
-df_c = df[df["language"]=="c"].copy()
+df_c = df[df["language"] == "c"].copy()
 print(df.to_string())
-shape_dict = {"c":".","Java":"s","python":"D","julia":"o"}
-fig, ax = plt.subplots(nrows=1,ncols=2)
+shape_dict = {"c": ".", "Java": "s", "python": "D", "julia": "o"}
+fig, ax = plt.subplots(nrows=1, ncols=2)
 # ax[0].scatter(df["problem"],df["time"])
 # ax[1].scatter(df["problem"],df["size"])
 
 for lang in df["language"].unique():
-    df_to_plot = df[df["language"]==lang].copy()
-    df_to_plot["time"] = df_to_plot["time"].to_numpy()/df_c["time"].to_numpy()
-    df_to_plot["size"] = df_to_plot["size"].to_numpy()/df_c["size"].to_numpy()
-    color = "gold" if lang=="julia" or lang=="c" else "grey"
+    df_to_plot = df[df["language"] == lang].copy()
+    df_to_plot["time"] = df_to_plot["time"].to_numpy() / df_c["time"].to_numpy()
+    df_to_plot["size"] = df_to_plot["size"].to_numpy() / df_c["size"].to_numpy()
+    color = "gold" if lang == "julia" or lang == "c" else "grey"
 
-    if(lang=="c"):
-        ax[0].plot(df_to_plot["problem"], df_to_plot["time"], color=color,label=lang)
-        ax[1].plot(df_to_plot["problem"].astype('str'), df_to_plot["size"], color=color,label=lang)
+    if (lang == "c"):
+        ax[0].plot(df_to_plot["problem"], df_to_plot["time"], color=color, label=lang)
+        ax[1].plot(df_to_plot["problem"].astype('str'), df_to_plot["size"], color=color, label=lang)
     else:
-        ax[0].scatter(df_to_plot["problem"],df_to_plot["time"],marker=shape_dict[lang],color=color,label=lang)
-        ax[1].scatter(df_to_plot["problem"],df_to_plot["size"], marker=shape_dict[lang], color=color, label=lang)
+        ax[0].scatter(df_to_plot["problem"], df_to_plot["time"], marker=shape_dict[lang], color=color, label=lang)
+        ax[1].scatter(df_to_plot["problem"], df_to_plot["size"], marker=shape_dict[lang], color=color, label=lang)
 
 ax[0].set_yscale("log")
 ax[0].set_ylabel("execution time (relative to C)")
@@ -76,9 +77,9 @@ fontDict = {'horizontalalignment': "right"}
 for axis in ax:
     ticks_loc = axis.get_xticks()
     axis.xaxis.set_major_locator(mticker.FixedLocator(locs=list(range(10))))
-    axis.set_xticklabels(labels=df_to_plot["problem"], rotation=45,fontsize=8,fontdict=fontDict)
+    axis.set_xticklabels(labels=df_to_plot["problem"], rotation=45, fontsize=8, fontdict=fontDict)
 
-#plt.legend()
+# plt.legend()
 for axis in ax: axis.legend()
 plt.tight_layout()
 plt.show()
