@@ -28,7 +28,7 @@ for i in range(max_iterations):
     sums_new_dice = sorted(list(a + b for a in new_dice1 for b in new_dice2))
 
     if sums_standard_dice == sums_new_dice:
-        print("Found an example o f Sichemarn dices! They are:\n" + new_dice1.__str__() + "\n" + new_dice2.__str__())
+        print("Found an example of Sichemarn dices! They are:\n" + new_dice1.__str__() + "\n" + new_dice2.__str__())
         break
 
     used_combinations.append([new_dice1, new_dice2])
